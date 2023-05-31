@@ -1,24 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
-
+import Login from './pages/login'
+import ForgotPassword from './pages/forgot-password';
+import Register from './pages/register';
+import {Route , Routes } from "react-router-dom";
+import { useStateManage } from './store/store';
 function App() {
+  const isLoggedIn = useStateManage((state) => state.isLoggedIn);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Routes>
+        <Route path='/' element ={<Login/>}/>
+        <Route path='forgot-password' element={<ForgotPassword/>}/>
+        <Route path='/register' element={<Register/>}/>
+      </Routes>
+    </>
   );
 }
 

@@ -8,13 +8,12 @@ import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import CarRentalRoundedIcon from "@mui/icons-material/CarRentalRounded";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useState, useEffect } from "react";
-import { PostSıngUp } from "../request/postRequest";
-
+import { useState } from "react";
+import {PostSingUpAdmin} from "../request/postRequest";
 function Copyright(props) {
   return (
     <Typography
@@ -38,36 +37,33 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
-  const [userInfo, setUserInfo] = useState({
-    firstName: "",
-    lastName: "",
-    userName: "",
-    password: "",
+  const [adminInfo, setAdminInfo] = useState({
+    companyName: "",
     email: "",
     phoneNumber: "",
+    serviceArea: "",
+    userName: "",
+    password: "",
+    Address: "",
   });
-
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = {
-        firstName: userInfo.firstName,
-        lastName : userInfo.lastName,
-        userName : userInfo.userName,
-        password : userInfo.password,
-        email : userInfo.email,
-        phoneNumber : userInfo.phoneNumber
+      companyName: adminInfo.companyName,
+      email: adminInfo.email,
+      phoneNumber: adminInfo.phoneNumber,
+      serviceArea : adminInfo.serviceArea,
+      userName: adminInfo.userName,
+      password: adminInfo.password,
+      Address : adminInfo.Address
     };
     try {
-      const response = await PostSıngUp(data);
+      const response = await PostSingUpAdmin(data);
       console.log(response);
     } catch (error) {
       console.log(error);
     }
   };
-
-  /*   useEffect(() => {
-    console.log(userInfo);
-  },[userInfo]) */
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -82,10 +78,10 @@ export default function SignUp() {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
+            <CarRentalRoundedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Create Rent Account
           </Typography>
           <Box
             component="form"
@@ -94,46 +90,76 @@ export default function SignUp() {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <TextField
-                  autoComplete="given-name"
+                  autoComplete="off"
+                  name="companyName"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="companyName"
+                  label="Company Name"
                   autoFocus
                   onChange={(e) =>
-                    setUserInfo({ ...userInfo, firstName: e.target.value })
+                    setAdminInfo({ ...adminInfo, companyName: e.target.value })
                   }
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  autoComplete="off"
+                  name="email"
+                  required
+                  fullWidth
+                  id="email"
+                  label="E-mail Address"
+                  autoFocus
+                  onChange={(e) =>
+                    setAdminInfo({ ...adminInfo, email: e.target.value })
+                  }
+                />
+              </Grid>
+              <Grid item xs={12} sm={12}>
+                <TextField
+                  autoComplete="off"
+                  name="phoneNumber"
+                  required
+                  fullWidth
+                  id="phoneNumber"
+                  label="Phone Number"
+                  autoFocus
+                  onChange={(e) =>
+                    setAdminInfo({ ...adminInfo, phoneNumber: e.target.value })
+                  }
+                />
+              </Grid>
+              <Grid item xs={12} sm={12}>
                 <TextField
                   required
                   fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
+                  id="serviceArea"
+                  label="Service Area"
+                  name="serviceArea"
+                  autoComplete="off"
                   onChange={(e) =>
-                    setUserInfo({ ...userInfo, lastName: e.target.value })
+                    setAdminInfo({ ...adminInfo, serviceArea: e.target.value })
                   }
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={12}>
                 <TextField
-                  autoComplete="given-username"
+                  autoComplete="off"
                   name="userName"
                   required
                   fullWidth
-                  id="username"
+                  id="userName"
                   label="User Name"
+                  autoFocus
                   onChange={(e) =>
-                    setUserInfo({ ...userInfo, userName: e.target.value })
+                    setAdminInfo({ ...adminInfo, userName: e.target.value })
                   }
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
@@ -143,7 +169,7 @@ export default function SignUp() {
                   id="password"
                   autoComplete="new-password"
                   onChange={(e) =>
-                    setUserInfo({ ...userInfo, password: e.target.value })
+                    setAdminInfo({ ...adminInfo, password: e.target.value })
                   }
                 />
               </Grid>
@@ -151,25 +177,12 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
+                  id="address"
+                  label="Address"
+                  name="address"
+                  autoComplete="off"
                   onChange={(e) =>
-                    setUserInfo({ ...userInfo, email: e.target.value })
-                  }
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="phonenumber"
-                  label="Phone Number"
-                  name="phoneNumber"
-                  autoComplete="phoneNumber"
-                  onChange={(e) =>
-                    setUserInfo({ ...userInfo, phoneNumber: e.target.value })
+                    setAdminInfo({ ...adminInfo, Address: e.target.value })
                   }
                 />
               </Grid>
@@ -192,7 +205,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="/" variant="body2">
+                <Link href="#" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
